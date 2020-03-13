@@ -24,5 +24,9 @@
         <module>action-web</module>
         <module>action-generator</module>
         <module>action-knowledge</module>
+        <!-- dubbo 相关 -->
+        <module>action-dubbo-api</module>
+        <module>action-dubbo-consumer</module>
+        <module>action-dubbo-provider</module>
     </modules>
 </project>

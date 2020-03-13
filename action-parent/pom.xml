@@ -22,7 +22,23 @@
         <mybatis-plus.version>3.3.1.tmp</mybatis-plus.version>
         <mysql.connector.version>8.0.17</mysql.connector.version>
         <nacos.version>0.2.1</nacos.version>
+        <dubbo.version>2.7.5</dubbo.version>
+        <nacos-clent.version>1.2.0</nacos-clent.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>apache.snapshots.https</id>
+            <name>Apache Development Snapshot Repository</name>
+            <url>https://repository.apache.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -54,6 +70,21 @@
                 <version>${action.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.lsqingfeng</groupId>
+                <artifactId>action-dubbo-api</artifactId>
+                <version>${action.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lsqingfeng</groupId>
+                <artifactId>action-dubbo-concumer</artifactId>
+                <version>${action.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lsqingfeng</groupId>
+                <artifactId>action-dubbo-provider</artifactId>
+                <version>${action.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
@@ -72,6 +103,35 @@
                 <groupId>com.alibaba.boot</groupId>
                 <artifactId>nacos-config-spring-boot-starter</artifactId>
                 <version>${nacos.version}</version>
+            </dependency>
+            <!-- Dubbo Spring Boot Starter -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <!-- Dubbo Registry Nacos -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-registry-nacos</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos-clent.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
