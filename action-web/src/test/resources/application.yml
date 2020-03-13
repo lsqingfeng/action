@@ -1,0 +1,23 @@
+server:
+  port: 9999
+
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/action?useSSL=false&useUnicode=true&autoReconnect=true&allowMultiQueries=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: root
+  redis:
+    cluster:
+      nodes: 192.168.1.11:6379,192.168.1.11:6380,192.168.1.13:6379,192.168.1.13:6380,192.168.1.14:6379,192.168.1.14:6380
+    database: 0
+    # host: 192.168.1.14
+    #port: 6379
+    #password:
+    lecttuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+      shutdown-timeout: 200ms
