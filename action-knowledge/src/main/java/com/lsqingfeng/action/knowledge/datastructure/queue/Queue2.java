@@ -1,4 +1,4 @@
-package com.lsqingfeng.action.knowledge.datastructure;
+package com.lsqingfeng.action.knowledge.datastructure.queue;
 
 /**
  * 使用链表实现
@@ -50,7 +50,7 @@ public class Queue2<T> {
         /**
          * 代表下一个节点
          */
-        Node next;
+        Node<T> next;
         public Node(T t){
             this.t = t;
         }

@@ -1,4 +1,4 @@
-package com.lsqingfeng.action.knowledge.datastructure;
+package com.lsqingfeng.action.knowledge.datastructure.queue;
 
 import java.util.LinkedList;
 
