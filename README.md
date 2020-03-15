@@ -1,5 +1,5 @@
 # 项目简介
-springboot脚手架，目前已集成 mybatis-plus, quartz, redis-cluster，nocas
+springboot脚手架，目前已集成 mybatis-plus, quartz, redis-cluster，nocas,rocketmq等
 
 springboot版本： 2.2.5
 
@@ -22,6 +22,10 @@ springboot版本： 2.2.5
     master:  springboot脚手架
     action-dubbo:  springboot整合dubbo脚手架
     action-springcloud:  springcloud脚手架
+   
+ 更新日志：
+ 2020.3.14:  action_springboot分支  web 更新springboot集成rocketmq集群的案例 
+ 2020.3.15： action_springboot分支  knoowledge 更新自定义队列的实现
    
 
 
