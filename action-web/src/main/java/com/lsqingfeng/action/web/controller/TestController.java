@@ -5,6 +5,8 @@ import com.lsqingfeng.action.core.service.ManUserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 
 @RestController
@@ -28,5 +30,12 @@ public class TestController {
         user.setPasswordSalt("abcd");
         manUserService.save(user);
         return "test";
+    }
+
+    @RequestMapping("/test2")
+    public String test2() throws UnknownHostException {
+
+        return Inet4Address.getLocalHost().getHostAddress();
+
     }
 }

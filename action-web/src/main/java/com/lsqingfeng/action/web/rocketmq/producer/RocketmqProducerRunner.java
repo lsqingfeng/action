@@ -14,7 +14,6 @@ import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.MessagingException;
@@ -40,7 +39,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 //@Component
 @Slf4j
-public class RocketmqProducerRunner implements CommandLineRunner {
+public class RocketmqProducerRunner //implements CommandLineRunner
+{
     @Resource
     private RocketMQTemplate rocketMQTemplate;
     @Value("${demo.rocketmq.transTopic}")
@@ -66,7 +66,6 @@ public class RocketmqProducerRunner implements CommandLineRunner {
     @Resource(name = "extRocketMQTemplate")
     private RocketMQTemplate extRocketMQTemplate;
 
-    @Override
     public void run(String... args) throws Exception {
 // Send string
         SendResult sendResult = rocketMQTemplate.syncSend(springTopic, "Hello, World!");
