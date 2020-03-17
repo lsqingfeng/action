@@ -10,12 +10,6 @@
     <name>action</name>
     <description>实战项目</description>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.5.RELEASE</version>
-    </parent>
-
     <modules>
         <module>action-parent</module>
         <module>action-common</module>
