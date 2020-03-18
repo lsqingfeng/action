@@ -183,4 +183,17 @@ public class ProducerController {
 
         return "success";
     }
+
+    /**************验证rocketmq顺序消费***************/
+    @RequestMapping("/send/ordered")
+    public String sendOrderedMsg(){
+        /**
+         * hashKey: 为了保证报到同一个队列中，将消息发送到orderTopic主题上
+         */
+        rocketMQTemplate.syncSendOrderly("orderTopic","no1","order");
+        rocketMQTemplate.syncSendOrderly("orderTopic","no2","order");
+        rocketMQTemplate.syncSendOrderly("orderTopic","no3","order");
+        rocketMQTemplate.syncSendOrderly("orderTopic","no4","order");
+        return "success";
+    }
 }
