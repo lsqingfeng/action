@@ -16,13 +16,13 @@ import java.util.concurrent.CyclicBarrier;
 public class CyclicBarrierDemo {
     public static void main(String[] args) {
         int num = 10;
-        /*CyclicBarrier barrier = new CyclicBarrier(num, new Runnable() {
+        CyclicBarrier barrier = new CyclicBarrier(num, new Runnable() {
             @Override
             public void run() {
                 System.out.println("go on together!");
             }
-        });*/
-        CyclicBarrier barrier = new CyclicBarrier(num);
+        });
+//        CyclicBarrier barrier = new CyclicBarrier(num);
         for (int i = 1; i <= num; i++) {
             new Thread(new CyclicBarrierWorker(i, barrier)).start();
         }
