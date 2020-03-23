@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -181,6 +182,35 @@ public class ProducerController {
         byte[] replyBytes = rocketMQTemplate.sendAndReceive(bytesRequestTopic, MessageBuilder.withPayload("request byte[]").build(), byte[].class, 30000);
         System.out.printf("send %s and receive %s %n", "request byte[]", new String(replyBytes));
 
+        return "success";
+    }
+
+    /**************验证rocketmq顺序消费***************/
+    @RequestMapping("/send/ordered")
+    public String sendOrderedMsg(){
+        /**
+         * hashKey: 为了保证报到同一个队列中，将消息发送到orderTopic主题上
+         */
+        rocketMQTemplate.syncSendOrderly("orderTopic","no1","order");
+        rocketMQTemplate.syncSendOrderly("orderTopic","no2","order");
+        rocketMQTemplate.syncSendOrderly("orderTopic","no3","order");
+        rocketMQTemplate.syncSendOrderly("orderTopic","no4","order");
+        return "success";
+    }
+
+    /**************验证rocketmq延迟队列消费***************/
+    @RequestMapping("/send/delay")
+    public String sendDelayMsg(){
+        /**
+         * 发送延时消息：
+         * 参数1： topic
+         * 参数2： Message类型消息
+         * 参数3： 超时时间
+         * 参数4： 延迟级别： messageDelayLevel=1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
+         */
+        // 4----30s
+        rocketMQTemplate.syncSend("delayTopic",MessageBuilder.withPayload("hello").build(),100,1);
+        System.out.println(LocalDateTime.now());
         return "success";
     }
 }
