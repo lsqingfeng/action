@@ -43,3 +43,14 @@ demo:
     tag: tagA
     consumer:
       bytesRequestTopic: bytesRequestTopic
+
+com:
+  lsqingfeng:
+    mystarter:
+      url: action-nnnnnnn
+      name: hahaha
+
+management:
+  endpoint:
+    health:
+      show-details: always
