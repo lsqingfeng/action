@@ -1,4 +1,4 @@
-package com.lsqingfeng.action.core.config;
+package com.lsqingfeng.action.common.redis.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,19 +9,15 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
-import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
+//@ConditionalOnProperty("spring.redis.database")
 @Slf4j
 public class RedisTemplateConfig {
 
@@ -53,8 +49,8 @@ public class RedisTemplateConfig {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
-        redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
         redisTemplate.setConnectionFactory(factory);
         return redisTemplate;
     }

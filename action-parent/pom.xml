@@ -41,6 +41,11 @@
             </dependency>
             <dependency>
                 <groupId>com.lsqingfeng</groupId>
+                <artifactId>action-common-redis</artifactId>
+                <version>${action.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lsqingfeng</groupId>
                 <artifactId>action-core</artifactId>
                 <version>${action.version}</version>
             </dependency>

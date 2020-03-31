@@ -2,6 +2,8 @@ server:
   port: 9999
 
 spring:
+  application:
+    name: action
   datasource:
     hikari:
       jdbc-url: jdbc:mysql://127.0.0.1:3306/action?useSSL=false&useUnicode=true&autoReconnect=true&allowMultiQueries=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull
@@ -21,3 +23,47 @@ spring:
         max-idle: 8
         min-idle: 0
       shutdown-timeout: 200ms
+nacos:
+  config:
+    server-addr: 192.168.1.11:8848
+
+
+#rocketmq配置
+rocketmq:
+  name-server: 192.168.1.11:9876;192.168.1.12:9876;192.168.1.13:9876
+  producer:
+    group: my-group1
+    sendMessageTimeout: 300000
+demo:
+  rocketmq:
+    topic: string-topic
+    orderTopic: order-paid-topic
+    msgExtTopic: message-ext-topic
+    transTopic: spring-transaction-topic
+    topic.user: user-topic
+    bytesRequestTopic: bytesRequestTopic:tagA
+    stringRequestTopic: stringRequestTopic:tagA
+    stringRequestTopic1: stringRequestTopic
+    objectRequestTopic: objectRequestTopic:tagA
+    genericRequestTopic: genericRequestTopic:tagA
+    extNameServer: 192.168.1.11:9876;192.168.1.12:9876;192.168.1.13:9876
+    myNameServer: 192.168.1.11:9876;192.168.1.12:9876;192.168.1.13:9876
+    #comsumer
+    bytesRequestConsumer: bytesRequestConsumer
+    stringRequestConsumer: stringRequestConsumer
+    objectRequestConsumer: objectRequestConsumer
+    genericRequestConsumer: genericRequestConsumer
+    tag: tagA
+    consumer:
+      bytesRequestTopic: bytesRequestTopic
+
+com:
+  lsqingfeng:
+    mystarter:
+      url: action-nnnnnnn
+      name: hahaha
+
+management:
+  endpoint:
+    health:
+      show-details: always

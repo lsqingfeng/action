@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
  * nacos: 演示
  * nacos 配置页面地址：http://192.168.1.11:8848/nacos/#/listeningToQuery?serverId=center&group=&dataId=&namespace=&appName=
  */
-@RestController
-@RequestMapping("/nacos")
+//@RestController
+//@RequestMapping("/nacos")
 public class NacosController {
 
     @NacosInjected

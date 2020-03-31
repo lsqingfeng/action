@@ -18,5 +18,6 @@
         <module>action-web</module>
         <module>action-generator</module>
         <module>action-knowledge</module>
+        <module>action-common-redis</module>
     </modules>
 </project>

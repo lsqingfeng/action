@@ -36,6 +36,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!-- 集成通用redis模块 -->
+        <dependency>
+            <groupId>com.lsqingfeng</groupId>
+            <artifactId>action-common-redis</artifactId>
+        </dependency>
         <!-- 自定义starter演示： -->
         <!--<dependency>
             <groupId>com.lsqingfeng</groupId>
