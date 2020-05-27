@@ -1,0 +1,13 @@
+server:
+  port: 9991
+
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/action?useSSL=false&useUnicode=true&autoReconnect=true&allowMultiQueries=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: root
+
+
+elasticsearch:
+  address: 192.168.200.36:9200

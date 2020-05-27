@@ -1,0 +1,20 @@
+server:
+  port: 8777
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/action?useSSL=false&useUnicode=true&autoReconnect=true&allowMultiQueries=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: root
+xxl:
+  job:
+    admin:
+      addresses: http://192.168.200.32:8092/xxl-job-admin
+    executor:
+      appname: action-job-test
+      ip:
+      port: 8654
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 30
+    ### xxl-job, access token
+    accessToken:

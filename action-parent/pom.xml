@@ -23,6 +23,7 @@
         <mysql.connector.version>8.0.17</mysql.connector.version>
         <nacos.version>0.2.1</nacos.version>
         <rocketmq-spring.version>2.1.0</rocketmq-spring.version>
+        <elasticsearch.version>7.2.0</elasticsearch.version>
     </properties>
 
     <dependencyManagement>
@@ -84,6 +85,21 @@
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>${rocketmq-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

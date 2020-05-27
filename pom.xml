@@ -19,5 +19,8 @@
         <module>action-generator</module>
         <module>action-knowledge</module>
         <module>action-common-redis</module>
+        <module>action-security</module>
+        <module>action-xxl-job</module>
+        <module>action-elasticsearch</module>
     </modules>
 </project>
