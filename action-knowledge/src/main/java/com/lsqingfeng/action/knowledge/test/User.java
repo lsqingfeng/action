@@ -23,6 +23,15 @@ public class User {
     public static void main(String[] args) {
         User build = User.builder().age(10).gener("男").name("张三").build();
         System.out.println(build);
+
+        Integer integer = 8999;
+        System.out.println(integer == 8999);
+
+
+        Integer a = null;
+        System.out.println(1==a);
+
+
     }
 
 

@@ -16,7 +16,40 @@
             <groupId>com.lsqingfeng</groupId>
             <artifactId>action-common</artifactId>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+
+        <!-- dozer -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.craftsman</groupId>
+            <artifactId>dozer-jdk8-support</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baidu.unbiz</groupId>
+            <artifactId>easy-mapper</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>1.5.2</version><!-- or latest version -->
+        </dependency>
+
     </dependencies>
+
 
 
 </project>

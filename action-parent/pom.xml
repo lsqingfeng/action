@@ -24,6 +24,7 @@
         <nacos.version>0.2.1</nacos.version>
         <rocketmq-spring.version>2.1.0</rocketmq-spring.version>
         <elasticsearch.version>7.2.0</elasticsearch.version>
+        <modelmapper.version>2.3.0</modelmapper.version>
     </properties>
 
     <dependencyManagement>
@@ -100,6 +101,12 @@
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
                 <version>${elasticsearch.version}</version>
+            </dependency>
+            <!-- 实体拷贝工具 -->
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
