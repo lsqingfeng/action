@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     hikari:
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/action?useSSL=false&useUnicode=true&autoReconnect=true&allowMultiQueries=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull
+      jdbc-url: jdbc:mysql://211.157.164.162:13307/cgdb_v2.0?useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
       username: root
-      password: root
+      password: 123456
 
 
 elasticsearch:

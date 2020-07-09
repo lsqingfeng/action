@@ -1,211 +1,174 @@
-package com.lsqingfeng.action.es.pojo;
+package com.lsqingfeng.action.es.pojo.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.lsqingfeng.action.es.annotation.Document;
-import com.lsqingfeng.action.es.annotation.Field;
-import com.lsqingfeng.action.es.enums.AnalyzerType;
-import com.lsqingfeng.action.es.enums.FieldType;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @className: Event
- * @description: 定义事件的文档类型
- * @author: sh.Liu
- * @create: 2020-05-27 10:02
+ * <p>
+ *
+ * </p>
+ *
+ * @author lvhuimin
+ * @since 2020-03-09
  */
 @Data
-@Document(index = "event", type = "event")
-public class Event {
+@TableName("t_cg_event")
+public class EventDO implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @Field(type = FieldType.KEYWORD)
+    @TableId(value = "event_id", type = IdType.AUTO)
     private Integer eventId;
 
     /**
      * 唯一标识码
      */
-    @Field(type = FieldType.KEYWORD)
     private String uniqueCode;
 
     /**
      * 任务号
      */
-    @Field(type = FieldType.KEYWORD)
     private String eventCode;
 
-    /**
-     * 事件来源编号
-     */
-    @Field(type = FieldType.INTEGER)
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private Integer eventSrcId;
 
     /**
      * 事件来源名称
      */
-    @Field(type = FieldType.TEXT, analyzer = AnalyzerType.IK_SMART)
     private String eventSrcName;
 
     /**
      * 来源分组
      */
-    @Field(type = FieldType.KEYWORD)
     private String srcGroupCode;
 
-    /**
-     * 事件大类编码
-     */
-    @Field(type = FieldType.KEYWORD)
+    @NotBlank(message = "事件大类编码不能为空")
     private String eventTypeCode;
 
     /**
      * 事件大类名称
      */
-    @Field(type = FieldType.KEYWORD)
     private String eventTypeName;
 
-    /**
-     * 事件小类编码
-     */
-    @Field(type = FieldType.KEYWORD)
+    @NotBlank(message = "事件小类编码不能为空")
     private String eventSubtypeCode;
 
     /**
      * 事件小类名称
      */
-    @Field(type = FieldType.KEYWORD)
     private String eventSubtypeName;
 
-    /**
-     * 重要程度
-     */
-    @Field(type = FieldType.INTEGER)
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @NotNull(message = "重要程度标识不能为空")
     private Integer eventGradeId;
 
     /**
      * 重要程度名称
      */
-    @Field(type = FieldType.KEYWORD)
     private String eventGradeName;
 
     /**
      *紧急程度标识
      */
-    @Field(type = FieldType.INTEGER)
     private Integer eventUrgencyId;
 
     /**
      *紧急程度名称
      */
-    @Field(type = FieldType.KEYWORD)
     private String eventUrgencyName;
 
     /**
      *事件级别标识
      */
-    @Field(type = FieldType.INTEGER)
     private Integer eventLevelId;
 
     /**
      *事件级别名称
      */
-    @Field(type = FieldType.KEYWORD)
     private String eventLevelName;
 
     /**
      *事件升级标志
      */
-    @Field(type = FieldType.INTEGER)
     private Integer eventUpgradeFlag;
 
     /**
      *处置级别标识
      */
-    @Field(type = FieldType.INTEGER)
     private Integer dealLevelId;
 
     /**
      *处置级别标识
      */
-    @Field(type = FieldType.KEYWORD)
     private String dealLevelName;
 
     /**
      *公众上报人名称
      */
-    @Field(type = FieldType.TEXT , analyzer = AnalyzerType.IK_SMART)
     private String publicReporterName;
 
     /**
      *公众上报人身份证号
      */
-    @Field(type = FieldType.KEYWORD)
     private String publicReporterIdcard;
 
     /**
      *公众上报人联系方式
      */
-    @Field(type = FieldType.KEYWORD)
     private String publicReporterTel;
-    /**
-     * 事件描述
-     */
-    @Field(type = FieldType.TEXT, analyzer = AnalyzerType.IK_SMART)
+
+    @NotBlank(message = "事件描述不能为空")
     private String eventDesc;
-    /**
-     * 地址
-     */
-    @Field
+
+    @NotBlank(message = "地址描述不能为空")
     private String address;
-    /**
-     * 地区名称
-     */
-    @Field(type = FieldType.KEYWORD)
+
+    @NotBlank(message = "地区名称不能为空")
     private String areaRegionName;
 
-    /**
-     * 地区编码
-     */
-    @Field(type = FieldType.KEYWORD)
+    @NotBlank(message = "地区编码不能为空")
     private String areaRegionCode;
 
     /**
      * 社区名称
      */
-    @Field(type = FieldType.KEYWORD)
+//    @NotBlank(message = "社区名称不能为空")
     private String commRegionName;
 
     /**
      * 区编码
      */
-    @Field(type = FieldType.KEYWORD)
+//    @NotBlank(message = "社区编码不能为空")
     private String commRegionCode;
 
     /**
      * 街道名称
      */
-    @Field(type = FieldType.KEYWORD)
+//    @NotBlank(message = "街道名称不能为空")
     private String streetRegionName;
 
     /**
      * 街道编码
      */
-    @Field(type = FieldType.KEYWORD)
+//    @NotBlank(message = "街道编码不能为空")
     private String streetRegionCode;
 
     /**
      * 社区名称
      */
-    @Field(type = FieldType.KEYWORD)
     private String regionName;
 
     /**
      * 社区编码
      */
-    @Field(type = FieldType.KEYWORD)
     private String regionCode;
 
     /**
@@ -241,26 +204,22 @@ public class Event {
     /**
      *核实状态标识
      */
-    @Field(type = FieldType.INTEGER)
     private Integer verifyStateId;
 
     /**
      *核查状态标识
      */
-    @Field(type = FieldType.INTEGER)
     private Integer checkStateId;
 
     /**
      *事件建立时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
     /**
      *流程结束时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
 
@@ -277,63 +236,54 @@ public class Event {
     /**
      *受理时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date acceptTime;
 
     /**
      *立案时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date establishTime;
 
     /**
      *调度时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date dispatchTime;
 
     /**
      *流程开始时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date procStartTime;
 
     /**
      *流程结束时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date procEndTime;
 
     /**
      *流程截止时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date procDeadLine;
 
     /**
      *流程警告时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date procWarningTime;
 
     /**
      *处置开始时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date funcBeginTime;
 
     /**
      *处置完成时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date funcFinishTime;
 
@@ -350,106 +300,171 @@ public class Event {
     /**
      *是否督办
      */
-    @Field(type = FieldType.INTEGER)
     private Integer pressFlag;
 
     /**
      *是否催办
      */
-    @Field(type = FieldType.INTEGER)
     private Integer hurryFlag;
 
     /**
      *超期标志
      */
-    @Field(type = FieldType.INTEGER)
     private Integer overtimeFlag;
 
     /**
      *活动属性
      */
-    @Field(type = FieldType.INTEGER)
     private Integer actPropertyId;
 
     /**
      *活动属性名称
      */
-    @Field(type = FieldType.KEYWORD)
     private String actPropertyName;
 
     /**
      *流程实例标识
      */
-    @Field(type = FieldType.KEYWORD)
     private String procInstId;
 
     /**
      *流程定义标识
      */
-    @Field(type = FieldType.KEYWORD)
     private String procDefId;
 
     /**
      *事件状态
      */
-    @Field(type = FieldType.INTEGER)
     private Integer eventStateId;
 
     /**
      * 上一操作项
      */
-    @Field(type = FieldType.KEYWORD)
     private String preActionName;
 
     /**
      * 登记人Id
      */
-    @Field(type = FieldType.INTEGER)
     private Integer registerId;
 
     /**
      * 登记人姓名
      */
-    @Field(analyzer = AnalyzerType.IK_SMART)
     private String registerName;
 
     /**
-     * 回访标识：0-未回访 1-已回访 2-无法回访
+     * 回访标识：
      */
-    @Field(type = FieldType.INTEGER)
     private Integer visitorStateId;
 
     /**
      * 删除标识
      */
-    @Field(type = FieldType.INTEGER)
     private Integer deleteFlag;
 
     /**
      * 删除用户标识
      */
-    @Field(type = FieldType.INTEGER)
     private Integer deleteUserId;
 
     /**
      * 删除时间
      */
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date deleteTime;
+
+    /**
+     * actionName
+     */
+    @TableField(exist = false)
+    private String actionName;
+
+
+    /**
+     * actionLable
+     */
+    @TableField(exist = false)
+    private String actionLabel;
 
     /**
      * 是否下发督查
      * 0：否，1：是
      */
-    @Field(type = FieldType.INTEGER)
     private Integer overseerFlag;
 
-    @Field(type = FieldType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateTime;
 
-    @Field(type = FieldType.OBJECT)
-    private Act action;
+
+    @Override
+    public String toString() {
+        return "EventDO{" +
+                "eventId=" + eventId +
+                ", uniqueCode=" + uniqueCode +
+                ", eventCode=" + eventCode +
+                ", eventSrcId=" + eventSrcId +
+                ", eventSrcName=" + eventSrcName +
+                ", eventTypeCode=" + eventTypeCode +
+                ", eventTypeName=" + eventTypeName +
+                ", eventSubtypeCode=" + eventSubtypeCode +
+                ", eventSubtypeName=" + eventSubtypeName +
+                ", eventGradeId=" + eventGradeId +
+                ", eventGradeName=" + eventGradeName +
+                ", eventUrgencyId=" + eventUrgencyId +
+                ", eventUrgencyName=" + eventUrgencyName +
+                ", eventLevelId=" + eventLevelId +
+                ", eventLevelName=" + eventLevelName +
+                ", eventUpgradeFlag=" + eventUpgradeFlag +
+                ", dealLevelId=" + dealLevelId +
+                ", dealLevelName=" + dealLevelName +
+                ", publicReporterName=" + publicReporterName +
+                ", publicReporterIdcard=" + publicReporterIdcard +
+                ", publicReporterTel=" + publicReporterTel +
+                ", eventDesc=" + eventDesc +
+                ", address=" + address +
+                ", areaRegionName=" + areaRegionName +
+                ", areaRegionCode=" + areaRegionCode +
+                ", commRegionName=" + commRegionName +
+                ", commRegionCode=" + commRegionCode +
+                ", streetRegionName=" + streetRegionName +
+                ", streetRegionCode=" + streetRegionCode +
+                ", regionName=" + regionName +
+                ", regionCode=" + regionCode +
+                ", mapcoordinate=" + mapcoordinate +
+                ", griderId=" + griderId +
+                ", griderName=" + griderName +
+                ", griderPhone=" + griderPhone +
+                ", verifyStateId=" + verifyStateId +
+                ", checkStateId=" + checkStateId +
+                ", createTime=" + createTime +
+                ", endTime=" + endTime +
+                ", postponedDays=" + postponedDays +
+                ", postponedFlag=" + postponedFlag +
+                ", acceptTime=" + acceptTime +
+                ", establishTime=" + establishTime +
+                ", dispatchTime=" + dispatchTime +
+                ", procStartTime=" + procStartTime +
+                ", procEndTime=" + procEndTime +
+                ", procDeadLine=" + procDeadLine +
+                ", procWarningTime=" + procWarningTime +
+                ", funcBeginTime=" + funcBeginTime +
+                ", funcFinishTime=" + funcFinishTime +
+                ", gridDealFlag=" + gridDealFlag +
+                ", overGridFlag=" + overGridFlag +
+                ", pressFlag=" + pressFlag +
+                ", hurryFlag=" + hurryFlag +
+                ", overtimeFlag=" + overtimeFlag +
+                ", actPropertyId=" + actPropertyId +
+                ", actPropertyName=" + actPropertyName +
+                ", procInstId=" + procInstId +
+                ", procDefId=" + procDefId +
+                ", eventStateId=" + eventStateId +
+                ", preActionName=" + preActionName +
+                ", registerId=" + registerId +
+                ", registerName=" + registerName +
+                "}";
+    }
+
 
 }
+

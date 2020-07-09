@@ -7,12 +7,15 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.dozer.DozerBeanMapper;
 import org.junit.Test;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.cglib.beans.BeanCopier;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @className: BeanCopyDemo
@@ -40,6 +43,7 @@ public class BeanCopyDemo {
         // 方式1： BeanUtils， 需引入commons-beanutils
         long start = System.currentTimeMillis();
         BeanUtils.copyProperties(p2, p);
+
         // apache BeanUtils 耗时:104毫秒
         System.out.println("apache BeanUtils 耗时:" + (System.currentTimeMillis() - start) + "毫秒");
         System.out.println("拷贝之后结果：" + p2);
@@ -59,8 +63,9 @@ public class BeanCopyDemo {
         // 方式3： 使用BeanCopier 是cglib提供的
         p2 = new PersonVO();
         start = System.currentTimeMillis();
-        // cglib BeanCopier 耗时:0毫秒
+        // cglib BeanCopier 不算初始化耗时:0毫秒 算上初始化40毫秒
         BeanCopier beanCopier = BeanCopier.create(Person.class, PersonVO.class, false);
+        // p 是源  p2 是目标
         beanCopier.copy(p, p2, null);
         System.out.println("cglib BeanCopier 耗时:" + (System.currentTimeMillis() - start) + "毫秒");
         System.out.println("拷贝之后结果：" + p2);
@@ -100,7 +105,7 @@ public class BeanCopyDemo {
         System.out.println("easyMapper 耗时:" + (System.currentTimeMillis() - start) + "毫秒");
         System.out.println("拷贝之后结果：" + p5);
 
-        // 6. orika:
+        // 6. orika:125ms
         start = System.currentTimeMillis();
         DefaultMapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
         MapperFacade orikaMapper = mapperFactory.getMapperFacade();
@@ -121,8 +126,26 @@ public class BeanCopyDemo {
      * easyMapper           耗时:88毫秒
      * orika                耗时:125  不算初始化58
      */
+    @Test
+    public void listTest(){
+        List<Person> list = new ArrayList<>();
+        for (int i=0; i<5;i++ ) {
+            Person p = new Person();
+            p.setId(i);
+            p.setName("张胜男" + i);
+            p.setPrice(new BigDecimal(12));
+            p.setCreateTime(new Date());
+            p.setUpdateTime(LocalDateTime.now()
+            );
+            p.setVipFlag(i%2 == 0);
+            list.add(p);
+        }
 
 
+        ModelMapper modelMapper = new ModelMapper();
+        List<PersonVO> list2 =  modelMapper.map(list, new TypeToken<List<PersonVO>>() {}.getType());
+        System.out.println(list2);
+    }
 
 }
 

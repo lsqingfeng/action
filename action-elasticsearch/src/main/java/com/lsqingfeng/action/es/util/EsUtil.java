@@ -12,6 +12,8 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -20,12 +22,17 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.IndicesOptions;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
+import org.elasticsearch.action.support.replication.ReplicationResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.client.indices.PutMappingRequest;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
@@ -41,10 +48,12 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @className: EsUtil
- * @description: es 操作工具类
+ * @description: es 操作工具类;
+ *      这里均采用同步调用的方式
  * @author: sh.Liu
  * @create: 2020-05-25 09:41
  */
@@ -111,8 +120,36 @@ public class EsUtil {
         }
         return false;
     }
+
     /**
-     * 查看索引是否存在
+     * 更新索引(默认分片数为5和副本数为1)：
+     * 只能给索引上添加一些不存在的字段
+     * 已经存在的映射不能改
+     *
+     * @param clazz 根据实体自动映射es索引
+     * @throws IOException
+     */
+    public boolean updateIndex(Class clazz) throws Exception {
+        Document declaredAnnotation = (Document )clazz.getDeclaredAnnotation(Document.class);
+        if(declaredAnnotation == null){
+            throw new Exception(String.format("class name: %s can not find Annotation [Document], please check", clazz.getName()));
+        }
+        String indexName = declaredAnnotation.index();
+        PutMappingRequest request = new PutMappingRequest(indexName);
+
+        request.source(generateBuilder(clazz));
+        AcknowledgedResponse response = restHighLevelClient.indices().putMapping(request, RequestOptions.DEFAULT);
+        // 指示是否所有节点都已确认请求
+        boolean acknowledged = response.isAcknowledged();
+
+        if (acknowledged ) {
+            log.info("更新索引索引成功！索引名称为{}", indexName);
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 删除索引
      * @param indexName
      * @return
      */
@@ -230,6 +267,23 @@ public class EsUtil {
         return jsonArray.toJSONString();
     }
 
+    public String search(String indexName, SearchSourceBuilder searchSourceBuilder) throws IOException {
+        SearchRequest searchRequest = new SearchRequest(indexName);
+        searchRequest.source(searchSourceBuilder);
+        searchRequest.scroll(TimeValue.timeValueMinutes(1L));
+        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        String scrollId = searchResponse.getScrollId();
+        SearchHits hits = searchResponse.getHits();
+        JSONArray jsonArray = new JSONArray();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            JSONObject jsonObject = JSON.parseObject(sourceAsString);
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray.toJSONString();
+    }
+
+
     /**
      * 批量插入文档
      * @param indexName
@@ -252,6 +306,87 @@ public class EsUtil {
             }
         }
         return true;
+    }
+
+    /**
+     * 删除文档
+     * @param indexName： 索引名称
+     * @param docId：     文档id
+     */
+    public boolean deleteDoc(String indexName, String docId) throws IOException {
+        DeleteRequest request = new DeleteRequest(indexName, docId);
+        DeleteResponse deleteResponse = restHighLevelClient.delete(request, RequestOptions.DEFAULT);
+        // 解析response
+        String index = deleteResponse.getIndex();
+        String id = deleteResponse.getId();
+        long version = deleteResponse.getVersion();
+        ReplicationResponse.ShardInfo shardInfo = deleteResponse.getShardInfo();
+        if (shardInfo.getFailed() > 0) {
+            for (ReplicationResponse.ShardInfo.Failure failure :
+                    shardInfo.getFailures()) {
+                String reason = failure.reason();
+                log.info("删除失败，原因为 {}", reason);
+            }
+        }
+        return true;
+    }
+
+
+    public boolean updateDoc(String indexName, String docId, Object o) throws IOException {
+        UpdateRequest request = new UpdateRequest(indexName, docId);
+        request.doc(JSON.toJSONString(o), XContentType.JSON);
+        UpdateResponse updateResponse = restHighLevelClient.update(request, RequestOptions.DEFAULT);
+        String index = updateResponse.getIndex();
+        String id = updateResponse.getId();
+        long version = updateResponse.getVersion();
+        if (updateResponse.getResult() == DocWriteResponse.Result.CREATED) {
+            return true;
+        } else if (updateResponse.getResult() == DocWriteResponse.Result.UPDATED) {
+            return true;
+        } else if (updateResponse.getResult() == DocWriteResponse.Result.DELETED) {
+        } else if (updateResponse.getResult() == DocWriteResponse.Result.NOOP) {
+
+        }
+        return false;
+    }
+
+    /**
+     * 根据业务字段查询数据
+     * @return
+     */
+    public Event getByBizId(String indexName, String bizId) throws IOException {
+        SearchRequest searchRequest = new SearchRequest(indexName);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.termQuery("eventId", bizId));
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits) {
+            String sourceAsString = hit.getSourceAsString();
+            Event event = JSON.parseObject(sourceAsString, Event.class);
+            return event;
+        }
+        return null;
+    }
+
+
+
+    public boolean updateDoc(String indexName, String docId, Map<String, Object> map) throws IOException {
+        UpdateRequest request = new UpdateRequest(indexName, docId);
+        request.doc(map);
+        UpdateResponse updateResponse = restHighLevelClient.update(request, RequestOptions.DEFAULT);
+        String index = updateResponse.getIndex();
+        String id = updateResponse.getId();
+        long version = updateResponse.getVersion();
+        if (updateResponse.getResult() == DocWriteResponse.Result.CREATED) {
+            return true;
+        } else if (updateResponse.getResult() == DocWriteResponse.Result.UPDATED) {
+            return true;
+        } else if (updateResponse.getResult() == DocWriteResponse.Result.DELETED) {
+        } else if (updateResponse.getResult() == DocWriteResponse.Result.NOOP) {
+
+        }
+        return false;
     }
 
     private XContentBuilder generateBuilder() throws IOException {
