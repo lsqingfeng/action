@@ -1,0 +1,9 @@
+server:
+  port: 9992
+
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://192.168.200.31:3306/cgdb_v1.3?useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      username: root
+      password: 123456

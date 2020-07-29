@@ -22,5 +22,6 @@
         <module>action-security</module>
         <module>action-xxl-job</module>
         <module>action-elasticsearch</module>
+        <module>action-spring-data-es</module>
     </modules>
 </project>

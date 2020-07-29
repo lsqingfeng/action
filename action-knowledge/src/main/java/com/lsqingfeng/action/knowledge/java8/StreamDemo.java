@@ -2,6 +2,7 @@ package com.lsqingfeng.action.knowledge.java8;
 
 import org.junit.Test;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -86,6 +87,14 @@ public class StreamDemo {
         System.out.println(result);
     }
 
-
+    /**
+     * 排序：
+     */
+    @Test
+    public void compare(){
+        // 先按照字符串的长度排序，继而按照大小写不敏感的字母顺序排序
+        Comparator<String> c = Comparator.comparingInt(String::length).thenComparing(String.CASE_INSENSITIVE_ORDER);
+        Stream.of("abc", "hello","d","how are you ,fine").sorted(c).forEach(System.out::println);
+    }
 
 }

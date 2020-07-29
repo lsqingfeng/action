@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan(basePackages = {
         "com.lsqingfeng.action.core.mapper",
-        "com.lsqingfeng.action.core.*.mapper",
 })
 public class MybatisPlusConfig {
     @Bean

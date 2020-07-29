@@ -9,10 +9,9 @@
         <relativePath>../action-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <description>使用es原生客户端调用es</description>
 
-    <artifactId>action-elasticsearch</artifactId>
-
+    <artifactId>action-spring-data-es</artifactId>
+    <description>使用spring-data客户端调用es案例</description>
 
     <dependencies>
         <dependency>
@@ -34,10 +33,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-client</artifactId>
@@ -47,11 +49,6 @@
             <artifactId>elasticsearch</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.12</version>
-        </dependency>
 
         <!-- 健康检查 -->
         <dependency>
@@ -61,7 +58,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.68</version>
+            <version>1.2.71</version>
             <scope>compile</scope>
         </dependency>
 
