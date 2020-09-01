@@ -2,6 +2,9 @@ package com.lsqingfeng.action.job.service;
 
 import com.lsqingfeng.action.core.entity.ManUser;
 import com.lsqingfeng.action.core.service.ManUserService;
+import com.xxl.job.core.biz.model.ReturnT;
+import com.xxl.job.core.handler.annotation.XxlJob;
+import com.xxl.job.core.log.XxlJobLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +21,15 @@ public class TestService {
 
     @Autowired
     private ManUserService manUserService;
+
+    @XxlJob("myHandler")
+    public ReturnT<String> execute(String param) {
+        XxlJobLogger.log("hello world.");
+        System.out.println(param);
+        System.out.println("hahahahahaha");
+
+        return ReturnT.SUCCESS;
+    }
 
     public void test(){
         for(int i=0; i<10; i++){
