@@ -105,7 +105,7 @@ public class XxlJobUtil {
         HttpEntity<String> entity = new HttpEntity<>(json ,headers);
         log.info(entity.toString());
         ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(url, entity, String.class);
-        return stringResponseEntity.getBody().toString();
+        return stringResponseEntity.getBody();
     }
 
 }
