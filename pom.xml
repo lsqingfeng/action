@@ -23,5 +23,7 @@
         <module>action-xxl-job</module>
         <module>action-elasticsearch</module>
         <module>action-spring-data-es</module>
+        <module>action-sharding</module>
+        <module>action-docker-test</module>
     </modules>
 </project>

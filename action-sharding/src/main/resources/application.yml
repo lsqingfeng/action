@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: sharding-database
+
+server:
+  port: 8812

@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MybatisPlusGenerator {
-    private static final String databaseURL = "jdbc:mysql://127.0.0.1:3306/action?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC";
+    private static final String databaseURL = "jdbc:mysql://127.0.0.1:3306/ds0?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC";
     private static final String userName = "root";
     private static final String password = "root";
     private static String projectPath = System.getProperty("user.dir");
-    private static String basePackage = "com.lsqingfeng.action.core";
+    private static String basePackage = "com.lsqingfeng.action";
 
     public static void main(String[] args) {
         //可按模块生成，如果不同业务的mapper想要放到各自的module下，可采用这种方式。如果都放到core下面，直接按ACTION_TEST配置即可
@@ -25,7 +25,7 @@ public class MybatisPlusGenerator {
 //        generate(ConfigEnum.RISK);
 //        generate(ConfigEnum.SYS);
 //        generate(ConfigEnum.MAN);
-        generate(ConfigEnum.ACTION_TEST);
+        generate(ConfigEnum.SHARDING);
     }
 
     public enum ConfigEnum {
@@ -51,7 +51,10 @@ public class MybatisPlusGenerator {
                 "man_user_channel_relation"),
 
         BIZ("sunfeilong","\\action-core",basePackage,"biz",
-                "biz_topic" );
+                "biz_topic" ),
+
+        SHARDING("liushuai","/action-sharding",basePackage+".sharding","t","t_user,t_address,t_order,t_order_item"),
+        ;
 
 
         private final String author;
