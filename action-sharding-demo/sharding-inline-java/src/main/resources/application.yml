@@ -2,7 +2,3 @@
 server:
   port: 9190
 
-mybatis-plus:
-  typeAliasesPackage: com.lsqingfeng.action.sharding.biz.entity
-  mapper-locations:
-    - classpath*:/mapper/*.xml
