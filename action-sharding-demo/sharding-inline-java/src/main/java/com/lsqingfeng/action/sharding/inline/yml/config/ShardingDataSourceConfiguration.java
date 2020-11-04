@@ -1,5 +1,6 @@
 package com.lsqingfeng.action.sharding.inline.yml.config;
 
+import org.apache.shardingsphere.api.config.sharding.KeyGeneratorConfiguration;
 import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;
@@ -32,6 +33,9 @@ public class ShardingDataSourceConfiguration {
         broadcastTables.add("t_address");
         shardingRuleConfig.setBroadcastTables(broadcastTables);
 
+        // 默认策略
+        shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration("user_id", "ds0"));
+        shardingRuleConfig.setDefaultTableShardingStrategyConfig(new InlineShardingStrategyConfiguration("user_id", "t_order_${user_id % 4 + 1}"));
         // 获取user表的分片规则配置
         TableRuleConfiguration userInfoTableRuleConfiguration = getUserInfoTableRuleConfiguration();
 
@@ -47,7 +51,7 @@ public class ShardingDataSourceConfiguration {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
         Map<String, Object> dataSourceProperties = new HashMap<>();
         dataSourceProperties.put("DriverClassName", "com.mysql.jdbc.Driver");
-        dataSourceProperties.put("jdbcUrl", "jdbc:mysql://localhost:3306/ds1?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8");
+        dataSourceProperties.put("jdbcUrl", "jdbc:mysql://localhost:3306/ds0?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8");
         dataSourceProperties.put("username", "root");
         dataSourceProperties.put("password", "root");
 
@@ -73,14 +77,14 @@ public class ShardingDataSourceConfiguration {
      */
     private TableRuleConfiguration getUserInfoTableRuleConfiguration() {
         // 为user表配置数据节点
-        TableRuleConfiguration ruleConfiguration = new TableRuleConfiguration("t_order", "ds0.user${1..4}");
+        TableRuleConfiguration ruleConfiguration = new TableRuleConfiguration("t_order", "ds0.t_order_$->{1..4}");
         // 设置分片键
         String shardingKey = "user_id";
         // 为user表配置分库分片策略及分片算法
-        ruleConfiguration.setDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration(shardingKey, "ds${user_id % 2}"));
+        ruleConfiguration.setDatabaseShardingStrategyConfig(new InlineShardingStrategyConfiguration(shardingKey, "ds0"));
         // 为user表配置分表分片策略及分片算法
         ruleConfiguration.setTableShardingStrategyConfig(new InlineShardingStrategyConfiguration(shardingKey, "t_order_${user_id % 4 + 1}"));
-
+        ruleConfiguration.setKeyGeneratorConfig(new KeyGeneratorConfiguration("SNOWFLAKE", "order_id"));
         return ruleConfiguration;
     }
 
