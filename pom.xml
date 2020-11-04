@@ -25,5 +25,9 @@
         <module>action-spring-data-es</module>
         <module>action-sharding</module>
         <module>action-docker-test</module>
+        <module>action-nacos</module>
+        <module>action-sharding-demo</module>
+        <module>action-sharding-demo/sharding-inline-yml</module>
+        <module>action-sharding-demo/sharding-biz</module>
     </modules>
 </project>

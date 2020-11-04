@@ -1,0 +1,6 @@
+
+server:
+  port: 9189
+spring:
+  profiles:
+    active: table

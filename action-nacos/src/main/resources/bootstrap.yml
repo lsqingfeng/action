@@ -1,0 +1,9 @@
+#服务名
+spring:
+  application:
+    name: action-nacos-config-example
+  # 配置中心url
+  cloud:
+    nacos:
+      config:
+        server-addr: 172.15.33.108:8848

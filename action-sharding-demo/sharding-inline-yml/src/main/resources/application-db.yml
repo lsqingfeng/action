@@ -1,0 +1,41 @@
+# 分库
+spring:
+  shardingsphere:
+    datasource:   #数据源配置
+      names: ds0,ds1
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/ds0?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: root
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/ds1?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: root
+    sharding:   #分片逻辑
+      default-database-strategy:
+        inline:
+          sharding-column: user_id
+          algorithm-expression: ds$->{user_id % 2}
+      binding-tables: t_order,t_order_item
+      broadcast-tables: t_user
+      tables:  #表逻辑
+        t_order:
+          actual-data-nodes: ds$->{0..1}.t_order
+          key-generator:
+            column: order_id
+            type: SNOWFLAKE
+            props:
+              worker:
+                id: 123
+        t_order_item:
+          actual-data-nodes: ds$->{0..1}.t_order_item
+          key-generator:
+            column: order_item_id
+            type: SNOWFLAKE
+            props:
+              worker:
+                id: 123

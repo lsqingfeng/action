@@ -1,0 +1,10 @@
+#spring:
+#  application:
+#    name: action-nacos  #应用名称
+#  datasource:   #数据源
+#    hikari:
+#      jdbc-url: jdbc:mysql://172.15.33.39:3306/cgdb_v1.3?useSSL=false&useUnicode=true&autoReconnect=true&allowMultiQueries=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull
+#      username: root
+#      password: Cestc@1234
+#server:
+#  port: 8877    #端口号
