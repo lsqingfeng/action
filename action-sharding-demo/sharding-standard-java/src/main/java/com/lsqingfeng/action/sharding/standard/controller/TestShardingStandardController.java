@@ -57,7 +57,7 @@ public class TestShardingStandardController {
             Order order = new Order();
             order.setUserId(Long.valueOf(i));
             order.setOrderCode("acb"+ i);
-            order.setAddressId(String.valueOf(i));
+            order.setAddressId(String.valueOf(i+100));
             orderService.save(order);
         }
         return "sucess";
@@ -102,7 +102,7 @@ public class TestShardingStandardController {
     // UnsupportedOperationException
     @RequestMapping("/listOrder3")
     public Object testListOrder3(){
-        List<Order> list = orderService.list(new LambdaQueryWrapper<Order>().between(Order::getUserId, 1L, 7L).orderByAsc(Order::getUserId));
+        List<Order> list = orderService.list(new LambdaQueryWrapper<Order>().between(Order::getAddressId, 100L, 127L).orderByAsc(Order::getUserId));
         return list;
     }
 

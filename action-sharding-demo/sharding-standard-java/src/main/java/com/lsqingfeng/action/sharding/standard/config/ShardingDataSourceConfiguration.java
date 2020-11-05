@@ -84,6 +84,7 @@ public class ShardingDataSourceConfiguration {
         // 为user表配置数据节点
         TableRuleConfiguration ruleConfiguration = new TableRuleConfiguration("t_order", "ds${0..1}.t_order_$->{1..4}");
 
+        // 若没有between and 可以没有最后的范围查询策略对象
         StandardShardingStrategyConfiguration dbShardingStrategyConfiguration = new StandardShardingStrategyConfiguration("user_id", new DatabasePreciseShardingAlgorithm(), new DatabaseRangeShardingAlgorithm());
         StandardShardingStrategyConfiguration tableShardingStrategyConfiguration = new StandardShardingStrategyConfiguration("user_id", new OrderTablePreciseShardingAlgorithm(),new OrderTableRangeShardingAlgorithm());
 
