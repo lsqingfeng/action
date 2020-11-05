@@ -1,0 +1,52 @@
+server:
+  port: 9191
+
+#数据源配置
+spring:
+  shardingsphere:
+    datasource:
+      names: ds0,ds1
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/ds0?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: root
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/ds1?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: root
+    sharding:   #分片逻辑
+      default-data-source-name: ds0
+      default-database-strategy:
+        standard:
+          sharding-column: user_id
+          precise-algorithm-class-name: com.lsqingfeng.action.sharding.standard.algorithm.DatabasePreciseShardingAlgorithm
+      binding-tables: t_order,t_order_item
+      broadcast-tables: t_user
+      tables:  #表逻辑
+        t_order:
+          actual-data-nodes: ds$->{0..1}.t_order_$->{1..4}
+          key-generator:
+            column: order_id
+            type: SNOWFLAKE
+            props:
+              worker:
+                id: 123
+          table-strategy:
+            standard:
+              sharding-column: user_id
+              precise-algorithm-class-name: com.lsqingfeng.action.sharding.standard.algorithm.OrderTablePreciseShardingAlgorithm
+        t_order_item:
+          actual-data-nodes: ds$->{0..1}.t_order_item
+          key-generator:
+            column: order_item_id
+            type: SNOWFLAKE
+            props:
+              worker:
+                id: 123
+      props:
+        sql:
+          show: true

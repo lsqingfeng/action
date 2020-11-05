@@ -1,4 +1,4 @@
-package com.lsqingfeng.action.sharding.inline.yml.config;
+package com.lsqingfeng.action.sharding.inline.config;
 
 import org.apache.shardingsphere.api.config.sharding.KeyGeneratorConfiguration;
 import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;

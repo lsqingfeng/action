@@ -1,4 +1,4 @@
-package com.lsqingfeng.action.sharding.inline.yml.controller;
+package com.lsqingfeng.action.sharding.inline.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;

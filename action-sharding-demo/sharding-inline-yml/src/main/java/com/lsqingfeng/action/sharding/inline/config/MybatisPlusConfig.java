@@ -1,4 +1,4 @@
-package com.lsqingfeng.action.sharding.inline.yml.config;
+package com.lsqingfeng.action.sharding.inline.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.mybatis.spring.annotation.MapperScan;

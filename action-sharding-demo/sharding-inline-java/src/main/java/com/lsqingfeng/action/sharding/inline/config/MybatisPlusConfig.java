@@ -1,8 +1,6 @@
-package com.lsqingfeng.action.sharding.inline.yml.config;
+package com.lsqingfeng.action.sharding.inline.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,16 +28,16 @@ public class MybatisPlusConfig {
         return paginationInterceptor;
     }
 
-    @Bean("sqlSessionFactoryForShardingjdbc")
-    public SqlSessionFactory sqlSessionFactoryForShardingjdbc() throws Exception {
-        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
-//        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().
-//                getResources("classpath*:**/*.xml"));
-//        sessionFactory.setTypeAliasesPackage("com.lsqingfeng.action.sharding.biz.entity");
-        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
-        configuration.setMapUnderscoreToCamelCase(true);
-        sessionFactory.setConfiguration(configuration);
-        return sessionFactory.getObject();
-    }
+//    @Bean("sqlSessionFactoryForShardingjdbc")
+//    public SqlSessionFactory sqlSessionFactoryForShardingjdbc() throws Exception {
+//        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+//        sessionFactory.setDataSource(dataSource);
+////        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().
+////                getResources("classpath*:**/*.xml"));
+////        sessionFactory.setTypeAliasesPackage("com.lsqingfeng.action.sharding.biz.entity");
+//        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+//        configuration.setMapUnderscoreToCamelCase(true);
+//        sessionFactory.setConfiguration(configuration);
+//        return sessionFactory.getObject();
+//    }
 }
