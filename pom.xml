@@ -29,5 +29,6 @@
         <module>action-sharding-demo</module>
         <module>action-sharding-demo/sharding-inline-yml</module>
         <module>action-sharding-demo/sharding-biz</module>
+        <module>action-swagger</module>
     </modules>
 </project>

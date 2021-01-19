@@ -26,6 +26,8 @@
         <elasticsearch.version>7.2.0</elasticsearch.version>
         <modelmapper.version>2.3.0</modelmapper.version>
         <shardingsphere.version>4.1.1</shardingsphere.version>
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <xiaoymin.swagger.version>1.9.6</xiaoymin.swagger.version>
     </properties>
 
     <dependencyManagement>
@@ -120,6 +122,16 @@
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-spring-namespace</artifactId>
                 <version>${shardingsphere.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${xiaoymin.swagger.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
